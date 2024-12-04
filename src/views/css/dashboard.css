@@ -1,0 +1,56 @@
+/* General Styles */
+body {
+    background-color: #2c2c2c;
+    color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+}
+
+.text-orange {
+    color: #ff8c00 !important;
+}
+
+.bg-orange {
+    background-color: #ff8c00 !important;
+}
+
+.btn-orange {
+    background-color: #ff8c00;
+    color: #fff;
+    border: none;
+}
+
+.btn-orange:hover {
+    background-color: #e07b00;
+    color: #fff;
+}
+
+/* Recipe List */
+.list-group-item {
+    background-color: #3b3b3b;
+    border: 1px solid #4a4a4a;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.list-group-item h5 {
+    color: #ff8c00;
+}
+
+.list-group-item .btn-warning {
+    color: #000;
+}
+
+.list-group-item .btn-danger {
+    background-color: #ff5733;
+    border: none;
+}
+
+.list-group-item .btn-danger:hover {
+    background-color: #c44122;
+}
+
+/* Modal Styles */
+.modal-header {
+    background-color: #ff8c00;
+    color: #fff;
+}

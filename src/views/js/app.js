@@ -24,6 +24,7 @@ app.controller("AuthController", function ($scope, $http) {
       .then((response) => {
         alert("Login successful!");
         // Redirect or perform post-login actions here
+        window.location.href = 'dashboard.html';
       })
       .catch((error) => {
         $scope.error = error.data.error;
