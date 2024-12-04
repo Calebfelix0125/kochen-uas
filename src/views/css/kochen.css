@@ -1,0 +1,89 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #222; /* Hitam sebagai latar belakang utama */
+    color: #fff; /* Putih untuk teks */
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #000; /* Hitam gelap untuk navbar */
+}
+
+.navbar-brand {
+    color: #FF8C00; /* Oranye terang untuk brand */
+    font-weight: bold;
+}
+
+.nav-link {
+    color: #FF8C00;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #FFD700; /* Warna kuning sebagai efek hover */
+}
+
+/* Carousel Styles */
+.carousel .carousel-item img {
+    height: 500px;
+    object-fit: cover;
+}
+
+/* About Us Section */
+.container h2 {
+    color: #FF8C00; /* Oranye untuk heading utama */
+    font-weight: bold;
+}
+
+p {
+    color: #ddd; /* Abu-abu terang untuk teks paragraf */
+}
+
+.btn-red {
+    background-color: #FF4500; /* Oranye kemerahan untuk tombol */
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-red:hover {
+    background-color: #FF6347; /* Lebih terang saat hover */
+    transform: scale(1.05);
+}
+
+/* Cards Section */
+.card {
+    background-color: #333; /* Abu-abu gelap untuk kartu */
+    border: 1px solid #444; /* Sedikit pembatas abu-abu */
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Sedikit efek melayang */
+}
+
+.card-title {
+    color: #FF8C00; /* Oranye untuk judul kartu */
+    font-weight: bold;
+}
+
+.card-text {
+    color: #ddd; /* Abu-abu terang untuk teks deskripsi */
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Footer Section (if needed in the future) */
+footer {
+    background-color: #111; /* Hitam pekat */
+    color: #FF8C00;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+}
