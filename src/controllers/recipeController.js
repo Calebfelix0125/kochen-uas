@@ -1,11 +1,31 @@
 const Recipe = require('../models/Recipe');
+const jwt = require('jsonwebtoken');  // Impor jsonwebtoken
 
 // POST: Tambah resep baru
 exports.createRecipe = async (req, res) => {
   try {
-    const { title, description, ingredients, instructions, author } = req.body;
-    const recipe = new Recipe({ title, description, ingredients, instructions, author });
+    // Assuming the authenticated user's ID is available in req.user (e.g., set by a middleware)
+    const userId = req.user?.id; 
+
+    if (!userId) {
+      return res.status(401).json({ error: 'User not authenticated' });
+    }
+
+    // Extract recipe data from the request body
+    const { title, description, ingredients, instructions } = req.body;
+
+    // Create a new recipe
+    const recipe = new Recipe({ 
+      title, 
+      description, 
+      ingredients, 
+      instructions, 
+      author: userId 
+    });
+
+    // Save the recipe to the database
     await recipe.save();
+
     res.status(201).json(recipe);
   } catch (err) {
     res.status(400).json({ error: err.message });
