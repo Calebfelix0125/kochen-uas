@@ -4,8 +4,8 @@ const path = require("path");
 
 const router = express.Router();
 
-router.post("/users/register", register);
-router.post("/users/login", login);
-router.post("/users/changepw", changepw);
+router.post("/register", register);
+router.post("/login", login);
+router.post("/changepw", changepw);
 
 module.exports = router;

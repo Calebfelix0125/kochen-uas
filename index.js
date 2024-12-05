@@ -19,9 +19,8 @@ app.use(express.static("public"));
 connectToDB();
 
 // Routes
-app.use("/", userRoutes);
+app.use("/users", userRoutes);
 app.use("/recipes", recipeRoutes);
-app.use("/articles", articleRoutes);
 
 // Start Server
 const PORT = process.env.PORT;
