@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="RecipeApp">
 
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 
-<body>
+<body ng-controller="RecipeController">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand text-orange" href="kochen.html">KOCHEN</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -41,13 +42,22 @@
                 <h2 class="text-orange text-center">Your Recipes</h2>
                 <!-- Search and Add Recipe -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <input type="text" id="searchRecipe" class="form-control w-50" placeholder="Search recipes by name">
-                    <button id="addRecipeBtn" class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#addRecipeModal">Add Recipe</button>
+                    <input type="text" class="form-control w-50" ng-model="searchQuery"
+                        placeholder="Search recipes by name">
+                    <button class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#addRecipeModal">Add
+                        Recipe</button>
                 </div>
 
                 <!-- Recipe List -->
-                <div id="recipeList" class="list-group">
-                    <!-- Recipes will dynamically appear here -->
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="recipe in recipes | filter:searchQuery">
+                        <h5>{{ recipe.title }}</h5>
+                        <p><strong>Description:</strong> {{ recipe.description }}</p>
+                        <p><strong>Authoe:</strong> {{ recipe.author.username }}</p>
+                        <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+                        <button class="btn btn-sm btn-warning me-2" ng-click="editRecipe(recipe)">Edit</button>
+                        <button class="btn btn-sm btn-danger" ng-click="deleteRecipe(recipe._id)">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,162 +68,48 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-orange text-white">
-                    <h5 class="modal-title" id="addRecipeModalLabel">Add New Recipe</h5>
+                    <h5 class="modal-title" id="addRecipeModalLabel">
+                        {{ editMode ? 'Edit Recipe' : 'Add New Recipe' }}
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="recipeForm">
-                        <div class="mb-3">
-                            <label for="recipeName" class="form-label">Recipe Name</label>
-                            <input type="text" class="form-control" id="recipeName" placeholder="E.g., Chocolate Cake" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="recipeDesc" class="form-label">Description</label>
-                            <textarea class="form-control" id="recipeDesc" rows="3" placeholder="Brief description of the recipe" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="cookTime" class="form-label">Cook Time (in minutes)</label>
-                            <input type="number" class="form-control" id="cookTime" placeholder="E.g., 30" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ingredients" class="form-label">Ingredients</label>
-                            <textarea class="form-control" id="ingredients" rows="3" placeholder="List the ingredients, separated by commas" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-orange" id="saveRecipeBtn">Save Recipe</button>
-                </div>
-            </div>
+                    </div>
+                    <div class="modal-body">
+                        <form name="recipeForm" ng-submit="saveRecipe()">
+                            <input type="hidden" ng-model="userId"> 
+                            <div class="mb-3">
+                                <label for="recipeName" class="form-label">Recipe Name</label>
+                                <input type="text" id="recipeName" class="form-control" ng-model="currentRecipe.title"
+                                    placeholder="E.g., Chocolate Cake" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipeDesc" class="form-label">Description</label>
+                                <textarea id="recipeDesc" class="form-control" ng-model="currentRecipe.description" rows="3"
+                                    placeholder="Brief description of the recipe" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ingredients" class="form-label">Ingredients</label>
+                                <textarea id="ingredients" class="form-control" ng-model="currentRecipe.ingredients" rows="3"
+                                    placeholder="List the ingredients, separated by commas" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="instructions" class="form-label">Instructions</label>
+                                <textarea id="instructions" class="form-control" ng-model="currentRecipe.instructions" rows="3"
+                                    placeholder="Step-by-step instructions" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">{{ editMode ? 'Update Recipe' : 'Add Recipe' }}</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const recipeList = document.getElementById('recipeList');
-        const saveRecipeBtn = document.getElementById('saveRecipeBtn');
-        const recipeForm = document.getElementById('recipeForm');
-        const searchRecipe = document.getElementById('searchRecipe');
-
-        let recipes = [];
-        let editingRecipeIndex = null;
-
-        // Save or Update Recipe
-        saveRecipeBtn.addEventListener('click', () => {
-            const recipeName = document.getElementById('recipeName').value;
-            const recipeDesc = document.getElementById('recipeDesc').value;
-            const cookTime = document.getElementById('cookTime').value;
-            const ingredients = document.getElementById('ingredients').value;
-
-            if (recipeName && recipeDesc && cookTime && ingredients) {
-                const newRecipe = {
-                    name: recipeName,
-                    desc: recipeDesc,
-                    time: cookTime,
-                    ingredients: ingredients
-                };
-
-                if (editingRecipeIndex !== null) {
-                    // Update existing recipe
-                    recipes[editingRecipeIndex] = newRecipe;
-                    editingRecipeIndex = null;
-                } else {
-                    // Add new recipe
-                    recipes.push(newRecipe);
-                }
-
-                updateRecipeList();
-                recipeForm.reset();
-                const addRecipeModal = bootstrap.Modal.getInstance(document.getElementById('addRecipeModal'));
-                addRecipeModal.hide();
-            } else {
-                alert('Please fill out all fields.');
-            }
-        });
-
-        // Update Recipe List
-        function updateRecipeList() {
-            recipeList.innerHTML = '';
-            recipes.forEach((recipe, index) => {
-                const recipeItem = document.createElement('div');
-                recipeItem.className = 'list-group-item';
-                recipeItem.innerHTML = `
-                    <h5>${recipe.name}</h5>
-                    <p><strong>Description:</strong> ${recipe.desc}</p>
-                    <p><strong>Cook Time:</strong> ${recipe.time} mins</p>
-                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                    <button class="btn btn-sm btn-warning me-2 edit-btn">Edit</button>
-                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
-                `;
-
-                recipeList.appendChild(recipeItem);
-
-                // Edit Recipe
-                recipeItem.querySelector('.edit-btn').addEventListener('click', () => {
-                    editingRecipeIndex = index;
-                    document.getElementById('recipeName').value = recipe.name;
-                    document.getElementById('recipeDesc').value = recipe.desc;
-                    document.getElementById('cookTime').value = recipe.time;
-                    document.getElementById('ingredients').value = recipe.ingredients;
-
-                    const addRecipeModal = new bootstrap.Modal(document.getElementById('addRecipeModal'));
-                    addRecipeModal.show();
-                });
-
-                // Delete Recipe
-                recipeItem.querySelector('.delete-btn').addEventListener('click', () => {
-                    recipes.splice(index, 1);
-                    updateRecipeList();
-                });
-            });
-        }
-
-        // Search Recipes
-        searchRecipe.addEventListener('input', () => {
-            const query = searchRecipe.value.toLowerCase();
-            const filteredRecipes = recipes.filter(recipe =>
-                recipe.name.toLowerCase().includes(query)
-            );
-            updateFilteredRecipeList(filteredRecipes);
-        });
-
-        function updateFilteredRecipeList(filteredRecipes) {
-            recipeList.innerHTML = '';
-            filteredRecipes.forEach((recipe, index) => {
-                const recipeItem = document.createElement('div');
-                recipeItem.className = 'list-group-item';
-                recipeItem.innerHTML = `
-                    <h5>${recipe.name}</h5>
-                    <p><strong>Description:</strong> ${recipe.desc}</p>
-                    <p><strong>Cook Time:</strong> ${recipe.time} mins</p>
-                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                    <button class="btn btn-sm btn-warning me-2 edit-btn">Edit</button>
-                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
-                `;
-
-                recipeList.appendChild(recipeItem);
-
-                // Add Edit and Delete functionality to filtered list
-                recipeItem.querySelector('.edit-btn').addEventListener('click', () => {
-                    editingRecipeIndex = recipes.indexOf(recipe);
-                    document.getElementById('recipeName').value = recipe.name;
-                    document.getElementById('recipeDesc').value = recipe.desc;
-                    document.getElementById('cookTime').value = recipe.time;
-                    document.getElementById('ingredients').value = recipe.ingredients;
-
-                    const addRecipeModal = new bootstrap.Modal(document.getElementById('addRecipeModal'));
-                    addRecipeModal.show();
-                });
-
-                recipeItem.querySelector('.delete-btn').addEventListener('click', () => {
-                    recipes.splice(recipes.indexOf(recipe), 1);
-                    updateRecipeList();
-                });
-            });
-        }
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.js"></script>
+    <script src="js/recipe.js"></script>
 </body>
 
 </html>

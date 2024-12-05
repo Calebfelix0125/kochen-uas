@@ -17,9 +17,9 @@ connectToDB();
 // Routes
 const userRoutes = require('./src/routes/userRoutes');
 const recipeRoutes = require('./src/routes/recipeRoutes');
-app.use('/api', userRoutes);
-app.use('/api/recipes', recipeRoutes);
+app.use('/users', userRoutes);
+app.use('/recipes', recipeRoutes);
 
 // Start Server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
