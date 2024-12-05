@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="articleApp">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/my-article.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -45,7 +45,7 @@
     </style>
   </head>
 
-  <body>
+  <body ng-controller="ArticleController">
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent sticky-top">
       <div class="container">
         <a class="navbar-brand" href="#"
@@ -114,348 +114,192 @@
       </div>
     </nav>
 
-    <div
-      class="container mt-4"
-      ng-app="articleApp"
-      ng-controller="ArticleController"
-    >
-      <div class="mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search articles..."
-          ng-model="searchQuery"
-        />
-      </div>
-
+    <div class="container mt-4">
       <div class="row">
-        <div
-          class="col-md-4"
-          ng-repeat="item in articles | filter: searchQuery"
-        >
-          <div class="card mb-3">
-            <img
-              ng-src="{{item.image || 'https://via.placeholder.com/150'}}"
-              class="card-img-top"
-              alt="{{item.title}}"
-            />
-
-            <div class="card-body">
-              <h5 class="card-title">{{item.title}}</h5>
-              <p class="card-text">
-                <small class="text-muted">By {{item.author}}</small>
-              </p>
-              <button
-                class="btn btn-warning btn-sm edit"
-                ng-click="editArticle(item)"
-                data-bs-toggle="modal"
-                data-bs-target="#articleModal"
-              >
-                Edit
-              </button>
-              <button
-                class="btn btn-danger btn-sm delete"
-                ng-click="confirmDelete(item)"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteModal"
-              >
-                Delete
-              </button>
-              <button class="btn btn-primary btn-sm read">Read More</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Floating Button -->
-        <button
-          class="btn btn-primary rounded-circle position-fixed"
-          style="
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-          "
-          data-bs-toggle="modal"
-          data-bs-target="#articleModal"
-          ng-click="resetForm()"
-        >
-          +
-        </button>
-      </div>
-
-      <!-- Modal for Adding or Editing -->
-      <div
-        class="modal fade"
-        id="articleModal"
-        tabindex="-1"
-        aria-labelledby="articleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">
-                {{ isEdit ? 'Edit Article' : 'Create Article' }}
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form ng-submit="saveArticle()" enctype="multipart/form-data">
-                <div class="mb-3">
-                  <label for="title" class="form-label">Title</label>
-                  <input
-                    type="text"
-                    id="title"
-                    class="form-control"
-                    ng-model="article.title"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="content" class="form-label">Content</label>
-                  <textarea
-                    id="content"
-                    class="form-control"
-                    ng-model="article.content"
-                    rows="3"
-                    required
-                  ></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="author" class="form-label">Author</label>
-                  <input
-                    type="text"
-                    id="author"
-                    class="form-control"
-                    ng-model="article.author"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="image" class="form-label">Upload Image</label>
-                  <input
-                    type="file"
-                    id="image"
-                    class="form-control"
-                    file-model="article.image"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  {{ isEdit ? "Update" : "Create" }}
-                </button>
+        <div class="col-lg-12">
+          <div class="container my-5">
+            <div class="row align-items-center">
+              <!-- Image Section -->
+              <div class="col-md-6 image-container">
+                <img class="cover" src="img/cover.jpg" alt="Delicious Food" />
+              </div>
+              <!-- Content Section -->
+              <div class="col-md-6 content">
+                <h1 class="lh-md caption">
+                  A variety of the best recipes for every taste, ready to spice
+                  up your menu today!
+                </h1>
+                <a href="#article" class="btn btn-get-started">Explore</a>
                 <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                  ng-click="resetForm()"
+                  class="btn btn-add-recipe"
+                  ng-click="openArticleModal()"
                 >
-                  Cancel
+                  Add Article
                 </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="modal fade"
-        id="articleModal"
-        tabindex="-1"
-        aria-labelledby="articleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="articleModalLabel">
-                {{ isEdit ? 'Edit Article' : 'Create Article' }}
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form ng-submit="saveArticle()">
-                <div class="mb-3">
-                  <label for="title" class="form-label">Title</label>
-                  <input
-                    type="text"
-                    id="title"
-                    class="form-control"
-                    ng-model="article.title"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="content" class="form-label">Content</label>
-                  <textarea
-                    id="content"
-                    class="form-control"
-                    ng-model="article.content"
-                    rows="3"
-                    required
-                  ></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="author" class="form-label">Author</label>
-                  <input
-                    type="text"
-                    id="author"
-                    class="form-control"
-                    ng-model="article.author"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="image" class="form-label">Image URL</label>
-                  <input
-                    type="url"
-                    id="image"
-                    class="form-control"
-                    ng-model="article.image"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  {{ isEdit ? 'Update' : 'Create' }}
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="modal fade"
-        id="deleteModal"
-        tabindex="-1"
-        aria-labelledby="deleteModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <p>
-                Are you sure you want to delete the article
-                <strong>{{ selectedArticle.title }}</strong>?
-              </p>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                ng-click="deleteArticle(selectedArticle._id)"
-                data-bs-dismiss="modal"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal for Editing an Article -->
-      <div
-        class="modal fade"
-        id="articleModal"
-        tabindex="-1"
-        aria-labelledby="articleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="articleModalLabel">
-                {{ isEdit ? 'Edit Article' : 'Create Article' }}
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form ng-submit="saveArticle()">
-                <div class="mb-3">
-                  <label for="title" class="form-label">Title</label>
-                  <input
-                    type="text"
-                    id="title"
-                    class="form-control"
-                    ng-model="article.title"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="content" class="form-label">Content</label>
-                  <textarea
-                    id="content"
-                    class="form-control"
-                    ng-model="article.content"
-                    rows="3"
-                    required
-                  ></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="author" class="form-label">Author</label>
-                  <input
-                    type="text"
-                    id="author"
-                    class="form-control"
-                    ng-model="article.author"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="image" class="form-label">Image URL</label>
-                  <input
-                    type="url"
-                    id="image"
-                    class="form-control"
-                    ng-model="article.image"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  {{ isEdit ? 'Update' : 'Create' }}
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                  ng-click="resetForm()"
-                >
-                  Cancel
-                </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div>
+      <div class="about-text" id="article">
+        <div class="text text1">article</div>
+        <div class="text text2">article</div>
+        <div class="text text3">article</div>
+        <div class="text text4">article</div>
+        <div class="text text5">article</div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div
+      class="container d-flex justify-content-between align-items-center mb-3"
+    >
+      <input
+        type="text"
+        class="form-control"
+        ng-model="searchQuery"
+        placeholder="Search article by name"
+      />
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <!-- Article Gallery (Grid Layout) -->
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div
+              class="col"
+              ng-repeat="article in articles | filter:searchQuery"
+              ng-if="articles.length > 0"
+            >
+              <div class="card h-100">
+                <!-- Article Image -->
+                <img
+                  ng-src="{{article.imageUrl}}"
+                  class="card-img-top"
+                  alt="{{article.title}}"
+                  style="height: 200px; object-fit: cover"
+                />
+                <div class="card-body">
+                  <!-- Article Title and Author -->
+                  <h5 class="card-title">{{article.title}}</h5>
+                  <p class="card-text">By {{article.author.username}}</p>
+                </div>
+                <div class="card-footer">
+                  <button class="btn btn-primary btn-sm">Read More</button>
+                  <!-- Edit and Delete Buttons -->
+                  <button
+                    class="btn btn-warning btn-sm"
+                    ng-click="openArticleModal(article)"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    class="btn btn-danger btn-sm"
+                    nng-click="confirmDelete(article)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- No Articles Message -->
+            <div ng-if="articles.length == 0" class="text-center col-12">
+              <p>No articles found. Add a new article!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <!-- Modal for Add/Edit Article -->
+    <div
+      class="modal fade"
+      id="articleModal"
+      tabindex="-1"
+      aria-labelledby="articleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="articleModalLabel">
+              {{isEdit ? 'Edit Article' : 'Add Article'}}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="saveArticle()">
+              <div class="mb-3">
+                <label for="articleTitle" class="form-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="articleTitle"
+                  ng-model="article.title"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="articleAuthor" class="form-label">Author</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="articleAuthor"
+                  ng-model="article.author.username"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="articleImage" class="form-label">Image URL</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="articleImage"
+                  ng-model="article.imageUrl"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="articleContent" class="form-label">Content</label>
+                <textarea
+                  class="form-control"
+                  id="articleContent"
+                  ng-model="article.content"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                {{isEdit ? 'Update' : 'Save'}}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="pb-3">
+      <div class="text-center mt-3">
+        <p class="mb-0">&copy; 2024 kochen. All Rights Reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>

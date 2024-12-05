@@ -16,12 +16,122 @@ body {
   }
 }
 
+.about-text {
+  width: 100%;
+  height: 150px;
+  min-width: 1536px;
+  margin-inline: auto;
+  background-color: #191919;
+  top: 0;
+  left: 0;
+  position: relative;
+  margin-top: 40px;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 80%,
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.text {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 130px;
+  width: 350px;
+  height: 100px;
+  color: #d6d1c0;
+  background-color: #191919;
+  position: absolute;
+  left: calc(300px * 8);
+  animation: aboutrolling 25s linear infinite;
+}
+
+.text1 {
+  animation-delay: calc(40s / 8 * (8 - 1) * -1);
+}
+
+.text2 {
+  animation-delay: calc(40s / 8 * (8 - 2) * -1);
+}
+
+.text3 {
+  animation-delay: calc(40s / 8 * (8 - 3) * -1);
+}
+
+.text4 {
+  animation-delay: calc(40s / 8 * (8 - 4) * -1);
+}
+
+.text5 {
+  animation-delay: calc(40s / 8 * (8 - 5) * -1);
+}
+
+/* Membuat animasi text berjalan */
+@keyframes aboutrolling {
+  from {
+  }
+  to {
+    left: -330px;
+  }
+}
+
+.cover {
+  width: 100%;
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+}
+
 .navbar {
   backdrop-filter: blur(10px);
 }
 
 .text-orange {
   color: #ff8c00 !important;
+}
+
+.content h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.caption {
+  color: #e3651d;
+}
+
+.image-container img {
+  width: 100%;
+  border-radius: 15%;
+}
+
+.btn-get-started {
+  border-radius: 25px;
+  background-color: #e4e2dd;
+  color: #e3651d;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn-get-started:hover {
+  background-color: #e4e2dd;
+  color: #e3651d;
+}
+
+.btn-add-recipe {
+  border-radius: 25px;
+  background-color: #e3651d;
+  color: #e4e2dd;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn-add-recipe:hover {
+  background-color: #e3651d;
+  color: #e4e2dd;
 }
 
 .bg-orange {
@@ -37,4 +147,52 @@ body {
 .btn-orange:hover {
   background-color: #e07b00;
   color: #fff;
+}
+
+.card {
+  background-color: #3b3b3b;
+  border: 1px solid #4a4a4a;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-title {
+  color: #ff8c00;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-footer {
+  background-color: #2c2c2c;
+}
+
+.card-footer .btn {
+  border-radius: 25px;
+  font-size: 0.9rem;
+}
+
+.card-footer .btn-warning {
+  background-color: #e3651d;
+  color: #fff;
+}
+
+.card-footer .btn-danger {
+  background-color: #ff5733;
+  color: #fff;
+}
+
+.recipe-details {
+  color: #000;
+}
+
+footer {
+  font-size: 0.9rem;
 }
