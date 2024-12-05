@@ -1,145 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cooking</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/dashboard.css">
-</head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
 
-<body>
+  <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand text-orange" href="kochen.html">KOCHEN</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link text-orange" href="dashboard.html" id="myRecipe">My Recipe</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-orange" href="my-article.html" id="myArticle">My Article</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-orange" href="my-profile.html" id="myProfile">My Profile</a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand text-orange" href="kochen.html">KOCHEN</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link text-orange"
+                href="dashboard.html"
+                id="myRecipe"
+                >My Recipe</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-orange"
+                href="my-article.html"
+                id="myArticle"
+                >My Article</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-orange"
+                href="my-profile.html"
+                id="myProfile"
+                >My Profile</a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- Body -->
     <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="text-orange text-center">Your Recipes</h2>
-                <!-- Search and Add Recipe -->
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <input type="text" id="searchRecipe" class="form-control w-50" placeholder="Search recipes by name">
-                    <button id="addRecipeBtn" class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#addRecipeModal">Add Recipe</button>
-                </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <h2 class="text-orange text-center">Your Recipes</h2>
+          <!-- Search and Add Recipe -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <input
+              type="text"
+              id="searchRecipe"
+              class="form-control w-50"
+              placeholder="Search recipes by name"
+            />
+            <button
+              id="addRecipeBtn"
+              class="btn btn-orange"
+              data-bs-toggle="modal"
+              data-bs-target="#addRecipeModal"
+            >
+              Add Recipe
+            </button>
+          </div>
 
-                <!-- Recipe List -->
-                <div id="recipeList" class="list-group">
-                    <!-- Recipes will dynamically appear here -->
-                </div>
-            </div>
+          <!-- Recipe List -->
+          <div id="recipeList" class="list-group">
+            <!-- Recipes will dynamically appear here -->
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Add/Edit Recipe Modal -->
-    <div class="modal fade" id="addRecipeModal" tabindex="-1" aria-labelledby="addRecipeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-orange text-white">
-                    <h5 class="modal-title" id="addRecipeModalLabel">Add New Recipe</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="recipeForm">
-                        <div class="mb-3">
-                            <label for="recipeName" class="form-label">Recipe Name</label>
-                            <input type="text" class="form-control" id="recipeName" placeholder="E.g., Chocolate Cake" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="recipeDesc" class="form-label">Description</label>
-                            <textarea class="form-control" id="recipeDesc" rows="3" placeholder="Brief description of the recipe" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="cookTime" class="form-label">Cook Time (in minutes)</label>
-                            <input type="number" class="form-control" id="cookTime" placeholder="E.g., 30" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ingredients" class="form-label">Ingredients</label>
-                            <textarea class="form-control" id="ingredients" rows="3" placeholder="List the ingredients, separated by commas" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-orange" id="saveRecipeBtn">Save Recipe</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="addRecipeModal"
+      tabindex="-1"
+      aria-labelledby="addRecipeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-orange text-white">
+            <h5 class="modal-title" id="addRecipeModalLabel">Add New Recipe</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="recipeForm">
+              <div class="mb-3">
+                <label for="recipeName" class="form-label">Recipe Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="recipeName"
+                  placeholder="E.g., Chocolate Cake"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="recipeDesc" class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  id="recipeDesc"
+                  rows="3"
+                  placeholder="Brief description of the recipe"
+                  required
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="cookTime" class="form-label"
+                  >Cook Time (in minutes)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="cookTime"
+                  placeholder="E.g., 30"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="ingredients" class="form-label">Ingredients</label>
+                <textarea
+                  class="form-control"
+                  id="ingredients"
+                  rows="3"
+                  placeholder="List the ingredients, separated by commas"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-orange" id="saveRecipeBtn">
+              Save Recipe
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const recipeList = document.getElementById('recipeList');
-        const saveRecipeBtn = document.getElementById('saveRecipeBtn');
-        const recipeForm = document.getElementById('recipeForm');
-        const searchRecipe = document.getElementById('searchRecipe');
+      const recipeList = document.getElementById("recipeList");
+      const saveRecipeBtn = document.getElementById("saveRecipeBtn");
+      const recipeForm = document.getElementById("recipeForm");
+      const searchRecipe = document.getElementById("searchRecipe");
 
-        let recipes = [];
-        let editingRecipeIndex = null;
+      let recipes = [];
+      let editingRecipeIndex = null;
 
-        // Save or Update Recipe
-        saveRecipeBtn.addEventListener('click', () => {
-            const recipeName = document.getElementById('recipeName').value;
-            const recipeDesc = document.getElementById('recipeDesc').value;
-            const cookTime = document.getElementById('cookTime').value;
-            const ingredients = document.getElementById('ingredients').value;
+      // Save or Update Recipe
+      saveRecipeBtn.addEventListener("click", () => {
+        const recipeName = document.getElementById("recipeName").value;
+        const recipeDesc = document.getElementById("recipeDesc").value;
+        const cookTime = document.getElementById("cookTime").value;
+        const ingredients = document.getElementById("ingredients").value;
 
-            if (recipeName && recipeDesc && cookTime && ingredients) {
-                const newRecipe = {
-                    name: recipeName,
-                    desc: recipeDesc,
-                    time: cookTime,
-                    ingredients: ingredients
-                };
+        if (recipeName && recipeDesc && cookTime && ingredients) {
+          const newRecipe = {
+            name: recipeName,
+            desc: recipeDesc,
+            time: cookTime,
+            ingredients: ingredients,
+          };
 
-                if (editingRecipeIndex !== null) {
-                    // Update existing recipe
-                    recipes[editingRecipeIndex] = newRecipe;
-                    editingRecipeIndex = null;
-                } else {
-                    // Add new recipe
-                    recipes.push(newRecipe);
-                }
+          if (editingRecipeIndex !== null) {
+            // Update existing recipe
+            recipes[editingRecipeIndex] = newRecipe;
+            editingRecipeIndex = null;
+          } else {
+            // Add new recipe
+            recipes.push(newRecipe);
+          }
 
-                updateRecipeList();
-                recipeForm.reset();
-                const addRecipeModal = bootstrap.Modal.getInstance(document.getElementById('addRecipeModal'));
-                addRecipeModal.hide();
-            } else {
-                alert('Please fill out all fields.');
-            }
-        });
+          updateRecipeList();
+          recipeForm.reset();
+          const addRecipeModal = bootstrap.Modal.getInstance(
+            document.getElementById("addRecipeModal")
+          );
+          addRecipeModal.hide();
+        } else {
+          alert("Please fill out all fields.");
+        }
+      });
 
-        // Update Recipe List
-        function updateRecipeList() {
-            recipeList.innerHTML = '';
-            recipes.forEach((recipe, index) => {
-                const recipeItem = document.createElement('div');
-                recipeItem.className = 'list-group-item';
-                recipeItem.innerHTML = `
+      // Update Recipe List
+      function updateRecipeList() {
+        recipeList.innerHTML = "";
+        recipes.forEach((recipe, index) => {
+          const recipeItem = document.createElement("div");
+          recipeItem.className = "list-group-item";
+          recipeItem.innerHTML = `
                     <h5>${recipe.name}</h5>
                     <p><strong>Description:</strong> ${recipe.desc}</p>
                     <p><strong>Cook Time:</strong> ${recipe.time} mins</p>
@@ -148,43 +232,49 @@
                     <button class="btn btn-sm btn-danger delete-btn">Delete</button>
                 `;
 
-                recipeList.appendChild(recipeItem);
+          recipeList.appendChild(recipeItem);
 
-                // Edit Recipe
-                recipeItem.querySelector('.edit-btn').addEventListener('click', () => {
-                    editingRecipeIndex = index;
-                    document.getElementById('recipeName').value = recipe.name;
-                    document.getElementById('recipeDesc').value = recipe.desc;
-                    document.getElementById('cookTime').value = recipe.time;
-                    document.getElementById('ingredients').value = recipe.ingredients;
+          // Edit Recipe
+          recipeItem
+            .querySelector(".edit-btn")
+            .addEventListener("click", () => {
+              editingRecipeIndex = index;
+              document.getElementById("recipeName").value = recipe.name;
+              document.getElementById("recipeDesc").value = recipe.desc;
+              document.getElementById("cookTime").value = recipe.time;
+              document.getElementById("ingredients").value = recipe.ingredients;
 
-                    const addRecipeModal = new bootstrap.Modal(document.getElementById('addRecipeModal'));
-                    addRecipeModal.show();
-                });
-
-                // Delete Recipe
-                recipeItem.querySelector('.delete-btn').addEventListener('click', () => {
-                    recipes.splice(index, 1);
-                    updateRecipeList();
-                });
+              const addRecipeModal = new bootstrap.Modal(
+                document.getElementById("addRecipeModal")
+              );
+              addRecipeModal.show();
             });
-        }
 
-        // Search Recipes
-        searchRecipe.addEventListener('input', () => {
-            const query = searchRecipe.value.toLowerCase();
-            const filteredRecipes = recipes.filter(recipe =>
-                recipe.name.toLowerCase().includes(query)
-            );
-            updateFilteredRecipeList(filteredRecipes);
+          // Delete Recipe
+          recipeItem
+            .querySelector(".delete-btn")
+            .addEventListener("click", () => {
+              recipes.splice(index, 1);
+              updateRecipeList();
+            });
         });
+      }
 
-        function updateFilteredRecipeList(filteredRecipes) {
-            recipeList.innerHTML = '';
-            filteredRecipes.forEach((recipe, index) => {
-                const recipeItem = document.createElement('div');
-                recipeItem.className = 'list-group-item';
-                recipeItem.innerHTML = `
+      // Search Recipes
+      searchRecipe.addEventListener("input", () => {
+        const query = searchRecipe.value.toLowerCase();
+        const filteredRecipes = recipes.filter((recipe) =>
+          recipe.name.toLowerCase().includes(query)
+        );
+        updateFilteredRecipeList(filteredRecipes);
+      });
+
+      function updateFilteredRecipeList(filteredRecipes) {
+        recipeList.innerHTML = "";
+        filteredRecipes.forEach((recipe, index) => {
+          const recipeItem = document.createElement("div");
+          recipeItem.className = "list-group-item";
+          recipeItem.innerHTML = `
                     <h5>${recipe.name}</h5>
                     <p><strong>Description:</strong> ${recipe.desc}</p>
                     <p><strong>Cook Time:</strong> ${recipe.time} mins</p>
@@ -193,27 +283,32 @@
                     <button class="btn btn-sm btn-danger delete-btn">Delete</button>
                 `;
 
-                recipeList.appendChild(recipeItem);
+          recipeList.appendChild(recipeItem);
 
-                // Add Edit and Delete functionality to filtered list
-                recipeItem.querySelector('.edit-btn').addEventListener('click', () => {
-                    editingRecipeIndex = recipes.indexOf(recipe);
-                    document.getElementById('recipeName').value = recipe.name;
-                    document.getElementById('recipeDesc').value = recipe.desc;
-                    document.getElementById('cookTime').value = recipe.time;
-                    document.getElementById('ingredients').value = recipe.ingredients;
+          // Add Edit and Delete functionality to filtered list
+          recipeItem
+            .querySelector(".edit-btn")
+            .addEventListener("click", () => {
+              editingRecipeIndex = recipes.indexOf(recipe);
+              document.getElementById("recipeName").value = recipe.name;
+              document.getElementById("recipeDesc").value = recipe.desc;
+              document.getElementById("cookTime").value = recipe.time;
+              document.getElementById("ingredients").value = recipe.ingredients;
 
-                    const addRecipeModal = new bootstrap.Modal(document.getElementById('addRecipeModal'));
-                    addRecipeModal.show();
-                });
-
-                recipeItem.querySelector('.delete-btn').addEventListener('click', () => {
-                    recipes.splice(recipes.indexOf(recipe), 1);
-                    updateRecipeList();
-                });
+              const addRecipeModal = new bootstrap.Modal(
+                document.getElementById("addRecipeModal")
+              );
+              addRecipeModal.show();
             });
-        }
+
+          recipeItem
+            .querySelector(".delete-btn")
+            .addEventListener("click", () => {
+              recipes.splice(recipes.indexOf(recipe), 1);
+              updateRecipeList();
+            });
+        });
+      }
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,0 +1,138 @@
+body {
+  background-color: #191919;
+  font-family: "Helvetica", sans-serif;
+  color: white;
+}
+
+.logo {
+  width: 100px;
+  height: 50px;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    background-color: rgba(25, 25, 25, 0.15);
+    backdrop-filter: blur(10px);
+  }
+}
+
+.cover {
+  width: 100%;
+  height: 80vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.content h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.caption {
+  color: #e3651d;
+}
+
+/* .content p {
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  color: #e4e2dd;
+} */
+
+.image-container img {
+  max-width: 100%;
+  border-radius: 100%;
+}
+
+.btn-get-started {
+  border-radius: 25px;
+  background-color: #e4e2dd;
+  color: #e3651d;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn-get-started:hover {
+  background-color: #e3651d;
+}
+.hero-section {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.about-text {
+  width: 100%;
+  height: 150px;
+  min-width: 1536px;
+  margin-inline: auto;
+  background-color: #191919;
+  top: 0;
+  left: 0;
+  position: relative;
+  margin-top: 40px;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 80%,
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.text {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 130px;
+  width: 350px;
+  height: 100px;
+  color: #d6d1c0;
+  background-color: #191919;
+  position: absolute;
+  left: calc(300px * 8);
+  animation: aboutrolling 25s linear infinite;
+}
+
+.text1 {
+  animation-delay: calc(40s / 8 * (8 - 1) * -1);
+}
+
+.text2 {
+  animation-delay: calc(40s / 8 * (8 - 2) * -1);
+}
+
+.text3 {
+  animation-delay: calc(40s / 8 * (8 - 3) * -1);
+}
+
+.text4 {
+  animation-delay: calc(40s / 8 * (8 - 4) * -1);
+}
+
+.text5 {
+  animation-delay: calc(40s / 8 * (8 - 5) * -1);
+}
+
+/* Membuat animasi text berjalan */
+@keyframes aboutrolling {
+  from {
+  }
+  to {
+    left: -330px;
+  }
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #e4e2dd;
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: #e4e2dd;
+  line-height: 1.6;
+}

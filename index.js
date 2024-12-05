@@ -5,6 +5,7 @@ const cors = require("cors");
 const { connectToDB } = require("./src/config/db.js");
 const userRoutes = require("./src/routes/userRoutes");
 const recipeRoutes = require("./src/routes/recipeRoutes");
+const articleRoutes = require("./src/routes/ArticleRoutes.js");
 
 // Inisialisasi Express
 const app = express();
@@ -12,13 +13,15 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static("public"));
 
 // Koneksi MongoDB
 connectToDB();
 
 // Routes
-app.use("/api", userRoutes);
-app.use("/api/recipes", recipeRoutes);
+app.use("/", userRoutes);
+app.use("/recipes", recipeRoutes);
+app.use("/articles", articleRoutes);
 
 // Start Server
 const PORT = process.env.PORT;
