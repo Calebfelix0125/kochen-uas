@@ -21,6 +21,7 @@ connectToDB();
 // Routes
 app.use("/users", userRoutes);
 app.use("/recipes", recipeRoutes);
+app.use("/articles", articleRoutes);
 
 // Start Server
 const PORT = process.env.PORT;

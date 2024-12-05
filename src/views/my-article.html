@@ -46,48 +46,70 @@
   </head>
 
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand text-orange" href="kochen.html">KOCHEN</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          ><img class="logo" src="img/Logo.png" alt=""
+        /></a>
         <button
-          class="navbar-toggler"
+          class="navbar-toggler shadow-none border-0"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
+        <div
+          class="sidebar offcanvas offcanvas-start"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header text-white border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+              <img class="logo" src="img/Logo.png" alt="" />
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body d-flex flex-column flex-lg-row p-lg-0">
+            <ul
+              class="navbar-nav align-items-center fs-5 justify-content-center flex-grow-1 pe-3"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="/src/views/welcome.html"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item mx-2">
+                <a class="nav-link" href="/src/views/dashboard.html">Recipe</a>
+              </li>
+              <li class="nav-item mx-2">
+                <a class="nav-link" href="/src/views/my-article.html"
+                  >Article</a
+                >
+              </li>
+            </ul>
+
+            <div
+              class="d-flex flex-column justify-content-center align-items-center flex-lg-row"
+            >
               <a
-                class="nav-link text-orange"
-                href="dashboard.html"
-                id="myRecipe"
-                >My Recipe</a
+                class="text-white text-decoration-none px-3 py-1 rounded-4"
+                href="#"
+                style="background-color: #e3651d"
+                >Login</a
               >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link text-orange"
-                href="my-article.html"
-                id="myArticle"
-                >My Article</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link text-orange"
-                href="my-profile.html"
-                id="myProfile"
-                >My Profile</a
-              >
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -143,10 +165,24 @@
             </div>
           </div>
         </div>
-      </div>
 
+        <!-- Floating Button -->
+        <button
+          class="btn btn-primary rounded-circle position-fixed"
+          style="
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+          "
+          data-bs-toggle="modal"
+          data-bs-target="#articleModal"
+          ng-click="resetForm()"
+        >
+          +
+        </button>
       </div>
-
 
       <!-- Modal for Adding or Editing -->
       <div
@@ -172,47 +208,47 @@
             <div class="modal-body">
               <form ng-submit="saveArticle()" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input
-                      type="text"
-                      id="title"
-                      class="form-control"
-                      ng-model="article.title"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="content" class="form-label">Content</label>
-                    <textarea
-                      id="content"
-                      class="form-control"
-                      ng-model="article.content"
-                      rows="3"
-                      required
-                    ></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label for="author" class="form-label">Author</label>
-                    <input
-                      type="text"
-                      id="author"
-                      class="form-control"
-                      ng-model="article.author"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="image" class="form-label">Upload Image</label>
-                    <input
-                      type="file"
-                      id="image"
-                      class="form-control"
-                      file-model="article.image"
-                    />
-                  </div>
-                  <button type="submit" class="btn btn-primary">
-                    {{ isEdit ? "Update" : "Create" }}
-                  </button>
+                  <label for="title" class="form-label">Title</label>
+                  <input
+                    type="text"
+                    id="title"
+                    class="form-control"
+                    ng-model="article.title"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="content" class="form-label">Content</label>
+                  <textarea
+                    id="content"
+                    class="form-control"
+                    ng-model="article.content"
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="author" class="form-label">Author</label>
+                  <input
+                    type="text"
+                    id="author"
+                    class="form-control"
+                    ng-model="article.author"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="image" class="form-label">Upload Image</label>
+                  <input
+                    type="file"
+                    id="image"
+                    class="form-control"
+                    file-model="article.image"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  {{ isEdit ? "Update" : "Create" }}
+                </button>
                 <button
                   type="button"
                   class="btn btn-secondary"
@@ -420,23 +456,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Floating Button -->
-      <button
-        class="btn btn-primary rounded-circle position-fixed"
-        style="
-          bottom: 20px;
-          right: 20px;
-          width: 60px;
-          height: 60px;
-          font-size: 24px;
-        "
-        data-bs-toggle="modal"
-        data-bs-target="#articleModal"
-        ng-click="resetForm()"
-      >
-        +
-      </button>
     </div>
   </body>
 </html>

@@ -16,6 +16,10 @@ body {
   }
 }
 
+.navbar {
+  backdrop-filter: blur(10px);
+}
+
 .cover {
   width: 100%;
   height: 80vh;
@@ -32,12 +36,6 @@ body {
 .caption {
   color: #e3651d;
 }
-
-/* .content p {
-  font-size: 0.9rem;
-  margin-bottom: 20px;
-  color: #e4e2dd;
-} */
 
 .image-container img {
   max-width: 100%;
@@ -135,4 +133,48 @@ body {
   font-size: 1.1rem;
   color: #e4e2dd;
   line-height: 1.6;
+}
+
+.card {
+  background-color: #333; /* Abu-abu gelap untuk kartu */
+  border: 1px solid #444; /* Sedikit pembatas abu-abu */
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Sedikit efek melayang */
+}
+
+.card-title {
+  color: #ff8c00; /* Oranye untuk judul kartu */
+  font-weight: bold;
+}
+
+.card-text {
+  color: #ddd; /* Abu-abu terang untuk teks deskripsi */
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.btn-red {
+  border-radius: 25px;
+  background-color: #e3651d;
+  color: #e4e2dd;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn-red:hover {
+  background-color: #e4e2dd;
+}
+
+footer {
+  font-size: 0.9rem;
+}
+
+html {
+  scroll-behavior: smooth;
 }

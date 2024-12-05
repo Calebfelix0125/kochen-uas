@@ -1,15 +1,20 @@
 const express = require("express");
 const articleController = require("../controllers/articleController");
-const upload = require("../middleware/upload.js");
 const router = express.Router();
 
-// Rute untuk membuat artikel dengan unggahan gambar
-router.post("/", upload.single("image"), articleController.createArticle);
+// Rute untuk membuat artikel
+router.post("/", articleController.createArticle);
 
-// Rute lain tetap sama
+// Rute untuk mengambil semua artikel
 router.get("/", articleController.getAllArticles);
+
+// Rute untuk mengambil artikel berdasarkan ID
 router.get("/:id", articleController.getArticleById);
-router.put("/:id", upload.single("image"), articleController.updateArticle);
+
+// Rute untuk memperbarui artikel berdasarkan ID
+router.put("/:id", articleController.updateArticle);
+
+// Rute untuk menghapus artikel berdasarkan ID
 router.delete("/:id", articleController.deleteArticle);
 
 module.exports = router;
