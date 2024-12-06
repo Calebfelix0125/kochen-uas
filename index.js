@@ -6,6 +6,7 @@ const { connectToDB } = require("./src/config/db.js");
 const userRoutes = require("./src/routes/userRoutes");
 const recipeRoutes = require("./src/routes/recipeRoutes");
 const articleRoutes = require("./src/routes/ArticleRoutes.js");
+const path = require("path");
 
 // Inisialisasi Express
 const app = express();
@@ -17,6 +18,9 @@ app.use(express.static("public"));
 
 // Koneksi MongoDB
 connectToDB();
+
+// Middleware untuk menyajikan file statis
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/users", userRoutes);

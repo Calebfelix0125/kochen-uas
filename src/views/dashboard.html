@@ -154,8 +154,8 @@
                 <!-- Recipe Photo -->
                 <img
                   ng-src="{{recipe.photoUrl}}"
-                  class="card-img-top"
                   alt="{{recipe.title}}"
+                  class="card-img-top"
                   style="height: 200px; object-fit: cover"
                 />
 
@@ -330,16 +330,13 @@
                 ></textarea>
               </div>
               <div class="mb-3">
-                <label for="photoUrl" class="form-label"
-                  >Recipe Photo URL</label
-                >
+                <label for="photo" class="form-label">Recipe Photo</label>
                 <input
-                  type="url"
-                  id="photoUrl"
+                  type="file"
+                  id="photo"
                   class="form-control"
-                  ng-model="currentRecipe.photoUrl"
-                  placeholder="Enter photo URL"
-                  required
+                  file-input="currentRecipe.photo"
+                  accept="image/*"
                 />
               </div>
 

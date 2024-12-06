@@ -24,56 +24,41 @@ app.controller("RecipeController", function ($scope, $http, $cookies) {
       return;
     }
 
-    const recipeData = {
-      title: $scope.currentRecipe.title,
-      description: $scope.currentRecipe.description,
-      ingredients: $scope.currentRecipe.ingredients.split(","),
-      instructions: $scope.currentRecipe.instructions,
-      author: $scope.userId,
-    };
+    const formData = new FormData();
+    formData.append("title", $scope.currentRecipe.title);
+    formData.append("description", $scope.currentRecipe.description);
+    formData.append("ingredients", $scope.currentRecipe.ingredients);
+    formData.append("instructions", $scope.currentRecipe.instructions);
 
-    if ($scope.editMode) {
-      $http
-        .put(
-          `http://localhost:3000/recipes/${$scope.currentRecipe._id}`,
-          recipeData,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
-        .then((response) => {
-          alert("Recipe updated successfully!");
-          $scope.loadRecipes();
-          const modal = bootstrap.Modal.getInstance(
-            document.getElementById("addRecipeModal")
-          );
-          modal.hide();
-        })
-        .catch((error) => {
-          console.error("Error updating recipe:", error);
-          alert("Failed to update recipe.");
-        });
-    } else {
-      $http
-        .post("http://localhost:3000/recipes/add", recipeData, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          alert("Recipe added successfully!");
-          $scope.loadRecipes();
-          const modal = bootstrap.Modal.getInstance(
-            document.getElementById("addRecipeModal")
-          );
-          modal.hide();
-        })
-        .catch((error) => {
-          console.error("Error adding recipe:", error);
-          alert("Failed to add recipe.");
-        });
+    if ($scope.currentRecipe.photo) {
+      formData.append("photo", $scope.currentRecipe.photo);
     }
 
-    $scope.currentRecipe = {};
-    $scope.editMode = false;
+    const url = $scope.editMode
+      ? `http://localhost:3000/recipes/${$scope.currentRecipe._id}`
+      : "http://localhost:3000/recipes/add";
+
+    const method = $scope.editMode ? "PUT" : "POST";
+
+    $http({
+      method: method,
+      url: url,
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": undefined, // Let the browser set the Content-Type
+      },
+    })
+      .then((response) => {
+        alert(
+          `${$scope.editMode ? "Recipe updated" : "Recipe added"} successfully!`
+        );
+        $scope.loadRecipes();
+      })
+      .catch((error) => {
+        console.error("Error saving recipe:", error);
+        alert("Failed to save recipe.");
+      });
   };
 
   // Edit Recipe
@@ -121,4 +106,19 @@ app.controller("RecipeController", function ($scope, $http, $cookies) {
 
   // Initialize
   $scope.loadRecipes();
+});
+
+app.directive("fileInput", function () {
+  return {
+    scope: {
+      fileInput: "=",
+    },
+    link: function (scope, element) {
+      element.bind("change", function (event) {
+        scope.$apply(function () {
+          scope.fileInput = event.target.files[0];
+        });
+      });
+    },
+  };
 });
