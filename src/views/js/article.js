@@ -1,11 +1,10 @@
 const app = angular.module("articleApp", []);
 
 app.controller("ArticleController", function ($scope, $http) {
-  const API_URL = "http://localhost:3000/articles";
+  const API_URL = "http://localhost:3000/articles"; // Ganti dengan URL API Anda
 
   $scope.articles = [];
   $scope.article = {};
-  $scope.selectedArticle = {};
   $scope.isEdit = false;
 
   // Fetch all articles
@@ -20,10 +19,10 @@ app.controller("ArticleController", function ($scope, $http) {
     );
   };
 
-  // Save article
+  // Save or update article
   $scope.saveArticle = function () {
     if ($scope.isEdit) {
-      // Update article
+      // Update existing article
       $http.put(`${API_URL}/${$scope.article._id}`, $scope.article).then(
         () => {
           $scope.getArticles();
@@ -34,7 +33,7 @@ app.controller("ArticleController", function ($scope, $http) {
         }
       );
     } else {
-      // Create article
+      // Create new article
       $http.post(API_URL, $scope.article).then(
         () => {
           $scope.getArticles();
@@ -47,27 +46,41 @@ app.controller("ArticleController", function ($scope, $http) {
     }
   };
 
-  // Edit article
-  $scope.editArticle = function (item) {
-    $scope.isEdit = true;
-    $scope.article = angular.copy(item); // Copy article data to form
+  // Open modal for adding a new article
+  $scope.openFormModal = function () {
+    $scope.isEdit = false;
+    $scope.article = {};
+    const modal = new bootstrap.Modal(document.getElementById("articleModal"));
+    modal.show();
   };
 
-  // Confirm delete
-  $scope.confirmDelete = function (item) {
-    $scope.selectedArticle = item;
+  // Open modal for editing an article
+  $scope.openArticleModal = function (article) {
+    $scope.isEdit = true;
+    $scope.article = angular.copy(article);
+    const modal = new bootstrap.Modal(document.getElementById("articleModal"));
+    modal.show();
   };
 
   // Delete article
   $scope.deleteArticle = function (id) {
-    $http.delete(`${API_URL}/${id}`).then(
-      () => {
-        $scope.getArticles();
-      },
-      (error) => {
-        console.error("Error deleting article:", error);
-      }
-    );
+    if (confirm("Are you sure you want to delete this article?")) {
+      $http.delete(`${API_URL}/${id}`).then(
+        () => {
+          $scope.getArticles();
+        },
+        (error) => {
+          console.error("Error deleting article:", error);
+        }
+      );
+    }
+  };
+
+  // Open modal for Read More
+  $scope.openReadMoreModal = function (article) {
+    $scope.article = article;
+    const modal = new bootstrap.Modal(document.getElementById("readMoreModal"));
+    modal.show();
   };
 
   // Reset form

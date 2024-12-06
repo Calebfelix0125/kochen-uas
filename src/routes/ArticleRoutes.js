@@ -2,7 +2,7 @@ const express = require("express");
 const articleController = require("../controllers/articleController");
 const router = express.Router();
 
-// Rute untuk membuat artikel
+// Rute untuk membuat artikel dengan upload gambar
 router.post("/", articleController.createArticle);
 
 // Rute untuk mengambil semua artikel

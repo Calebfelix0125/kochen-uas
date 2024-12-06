@@ -130,10 +130,7 @@
                   up your menu today!
                 </h1>
                 <a href="#article" class="btn btn-get-started">Explore</a>
-                <button
-                  class="btn btn-add-recipe"
-                  ng-click="openArticleModal()"
-                >
+                <button class="btn btn-add-recipe" ng-click="openFormModal()">
                   Add Article
                 </button>
               </div>
@@ -169,74 +166,65 @@
     </div>
 
     <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <!-- Article Gallery (Grid Layout) -->
-          <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div
-              class="col"
-              ng-repeat="article in articles | filter:searchQuery"
-              ng-if="articles.length > 0"
-            >
-              <div class="card h-100">
-                <!-- Article Image -->
-                <img
-                  ng-src="{{article.imageUrl}}"
-                  class="card-img-top"
-                  alt="{{article.title}}"
-                  style="height: 200px; object-fit: cover"
-                />
-                <div class="card-body">
-                  <!-- Article Title and Author -->
-                  <h5 class="card-title">{{article.title}}</h5>
-                  <p class="card-text">By {{article.author.username}}</p>
-                </div>
-                <div class="card-footer">
-                  <button class="btn btn-primary btn-sm">Read More</button>
-                  <!-- Edit and Delete Buttons -->
-                  <button
-                    class="btn btn-warning btn-sm"
-                    ng-click="openArticleModal(article)"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    class="btn btn-danger btn-sm"
-                    nng-click="confirmDelete(article)"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div
+          class="col"
+          ng-repeat="article in articles | filter:searchQuery"
+          ng-if="articles.length > 0"
+        >
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{article.title}}</h5>
+              <p class="card-text">{{article.content | limitTo: 100}}...</p>
+              <!-- Menampilkan sebagian konten -->
             </div>
-
-            <!-- No Articles Message -->
-            <div ng-if="articles.length == 0" class="text-center col-12">
-              <p>No articles found. Add a new article!</p>
+            <div class="card-footer">
+              <button
+                class="btn btn-warning btn-sm"
+                ng-click="openArticleModal(article)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn btn-danger btn-sm"
+                ng-click="deleteArticle(article._id)"
+              >
+                Delete
+              </button>
+              <!-- Tombol Read More -->
+              <button
+                class="btn btn-primary btn-sm"
+                ng-click="openReadMoreModal(article)"
+              >
+                Read More
+              </button>
             </div>
           </div>
+        </div>
+
+        <div ng-if="articles.length == 0" class="text-center col-12">
+          <p>No articles found. Add a new article!</p>
         </div>
       </div>
     </div>
 
-    <br />
-    <br />
-    <br />
-    <br />
-
-    <!-- Modal for Add/Edit Article -->
+    <!-- Modal untuk Read More -->
     <div
       class="modal fade"
-      id="articleModal"
+      id="readMoreModal"
       tabindex="-1"
-      aria-labelledby="articleModalLabel"
+      aria-labelledby="readMoreModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="articleModalLabel">
-              {{isEdit ? 'Edit Article' : 'Add Article'}}
+            <h5
+              class="modal-title"
+              style="color: black"
+              id="readMoreModalLabel"
+            >
+              {{article.title}}
             </h5>
             <button
               type="button"
@@ -246,60 +234,168 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form ng-submit="saveArticle()">
-              <div class="mb-3">
-                <label for="articleTitle" class="form-label">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="articleTitle"
-                  ng-model="article.title"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="articleAuthor" class="form-label">Author</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="articleAuthor"
-                  ng-model="article.author.username"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="articleImage" class="form-label">Image URL</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="articleImage"
-                  ng-model="article.imageUrl"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="articleContent" class="form-label">Content</label>
-                <textarea
-                  class="form-control"
-                  id="articleContent"
-                  ng-model="article.content"
-                  rows="3"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">
-                {{isEdit ? 'Update' : 'Save'}}
-              </button>
-            </form>
+            <h6 style="color: black">Author: {{article.author.username}}</h6>
+            <p>{{article.content}}</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
     </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
 
     <footer class="pb-3">
       <div class="text-center mt-3">
         <p class="mb-0">&copy; 2024 kochen. All Rights Reserved.</p>
       </div>
     </footer>
+
+    <!-- Modal for Article Form -->
+    <div
+      class="modal fade"
+      id="articleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="articleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border: 2px solid #e3651d">
+          <div
+            class="modal-header"
+            style="background-color: #e3651d; color: white"
+          >
+            <h5 class="modal-title" id="articleModalLabel">
+              {{isEdit ? "Edit Article" : "Add New Article"}}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              style="background-color: white"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label
+                  for="articleTitle"
+                  class="form-label"
+                  style="color: #e3651d"
+                  >Title</label
+                >
+                <input
+                  type="text"
+                  id="articleTitle"
+                  class="form-control"
+                  ng-model="article.title"
+                  required
+                  style="border: 1px solid #e3651d"
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="articleContent"
+                  class="form-label"
+                  style="color: #e3651d"
+                  >Content</label
+                >
+                <textarea
+                  id="articleContent"
+                  class="form-control"
+                  ng-model="article.content"
+                  rows="5"
+                  required
+                  style="border: 1px solid #e3651d"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer" style="border-top: 1px solid #e3651d">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              style="background-color: #e3651d; color: white"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              ng-click="saveArticle()"
+              data-bs-dismiss="modal"
+              style="background-color: #e3651d; color: white; border: none"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div
+      class="modal fade"
+      id="deleteConfirmationModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteConfirmationLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border: 2px solid #e3651d">
+          <div
+            class="modal-header"
+            style="background-color: #e3651d; color: white"
+          >
+            <h5 class="modal-title" id="deleteConfirmationLabel">
+              Confirm Delete
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              style="background-color: white"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this article titled
+            "<strong>{{article.title}}</strong>"?
+          </div>
+          <div class="modal-footer" style="border-top: 1px solid #e3651d">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              style="background-color: #e3651d; color: white"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              ng-click="confirmDelete(article.id)"
+              data-bs-dismiss="modal"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
